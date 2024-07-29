@@ -1,0 +1,17 @@
+hostname {{ hostname }}
+
+interface {{ interface }}
+ ip address {{ ip_address }} {{ subnet_mask }}
+ description {{ description }}
+
+ip access-list extended {{ acl_name }}
+ {% for rule in acl_rules %}
+  {{ rule }}
+ {% endfor %}
+
+ip nat inside source static {{ inside_local }} {{ inside_global }}
+
+!
+line vty 0 4
+ login local
+ transport input ssh
